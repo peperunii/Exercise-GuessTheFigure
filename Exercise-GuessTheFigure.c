@@ -1,3 +1,10 @@
+/********************************************
+*											*
+*    Console Exercise - Guess the figure    *
+*    Author Petar Nikolov                   *
+*											*
+*********************************************/
+
 #include <stdio.h>
 #include <conio.h>
 #include <math.h>
