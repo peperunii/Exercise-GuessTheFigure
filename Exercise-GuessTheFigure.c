@@ -1,8 +1,8 @@
 /********************************************
-*											*
+*                                           *
 *    Console Exercise - Guess the figure    *
 *    Author Petar Nikolov                   *
-*											*
+*                                           *
 *********************************************/
 
 #include <stdio.h>
@@ -41,7 +41,7 @@ int main()
     scanf("%d",&NUMBER_OF_INPUT_POINTS);
 
     input_coord = (int *)malloc(NUMBER_OF_INPUT_POINTS * sizeof(int));
-    coord		= (int *)malloc(NUMBER_OF_INPUT_POINTS * sizeof(int));
+    coord       = (int *)malloc(NUMBER_OF_INPUT_POINTS * sizeof(int));
     for (i = 0; i < 4; i++) figura_coord[i] = -1;
     for (i = 0; i < 5; i++) figura_types[i] = 0;
     /* Check input data */
@@ -70,14 +70,14 @@ int main()
 
     // Shifting the coordinate system to first quadrant
     /*
-                    |                           |		
-                    |                           |		
-                    |                           | 		
-                  *	|   *                       |     *       *
+                    |                           |        
+                    |                           |        
+                    |                           |         
+               *    |   *                       |     *       *
             ________|_________________  ---->   |                   
-                  *	|                           |     *	              
-            *       |                           | *		
-                    |                           |_______________________		                  
+               *    |                           |     *                  
+            *       |                           | *        
+                    |                           |_______________________                          
     
     
     */
@@ -164,11 +164,11 @@ int main()
 
         printf("There are %d figures formed from the given points\n", NumberOfRecognizedFigures);
         do{
-PrintTUK:	    // Don't blame me for using goto in a cycle. It is completely secure :)
+PrintHere:	// Don't blame me for using goto in a cycle. It is completely secure :)
             fflush(stdin);
             printf("If you want to visualize graphic and information for a specific figure, Enter its number ( 26 for Exit)\nFigure Number: ");
             scanf_s("%d", &FigureNumber);
-            if(( ((FigureNumber < 0) || (FigureNumber > NumberOfRecognizedFigures-1))) && (FigureNumber != 26)) goto PrintTUK;
+            if(( ((FigureNumber < 0) || (FigureNumber > NumberOfRecognizedFigures-1))) && (FigureNumber != 26)) goto PrintHere;
             figura_type = figura_types[FigureNumber];
             if(FigureNumber == 26) goto EX_IT;
             switch (figura_type)
