@@ -68,15 +68,15 @@ int main()
                 
         } while (t != (2 * NUMBER_OF_INPUT_POINTS));
 
-        // Izmestvane na coordinatnata sistema do pyrvi kvadrant - Samo za izchislenie.
+        // Shifting the coordinate system to first quadrant
         /*
                         |                           |		
                         |                           |		
                         |                           | 		
-                      *	|   *						|     *       *
+                      *	|   *                       |     *       *
                 ________|_________________  ---->   |                   
                       *	|                           |     *	              
-                *		|                           | *		
+                *       |                           | *		
                         |                           |_______________________		                  
         
         
@@ -100,16 +100,16 @@ int main()
             coord[2 * i + 1] = input_coord[2 * i + 1] + shift_y;
         }
 
-        // Presmqtane na teorema na Tales za vsqka tochka po zadadeni drugi dve
+        //Thales theorem
         /*                   Z
-        y3					+								|  A, B - zadadeni tochki obrazuvashti prava ( i, j)
-        |			B		.								|  +  Z tochka koqto shte byde proverena dali se namira na pravata AB
-        y2		    *		.								|
-        |           .		.								|  Proverqva se otnoshenieto ((B_x - A_x)/ ( Z_x - A_x)) == ((B_y -A_y)/ (Z_y - A_y))
-        |    A      .		.								|
-        y1   * . . ...	.  ..								|
-        |          		     								|
-        |____X1_____x2______X3______________________________|
+        y3                   +                |  A, B - zadadeni tochki obrazuvashti prava ( i, j)
+        |            B       .                |  +  Z tochka koqto shte byde proverena dali se namira na pravata AB
+        y2           *       .                |
+        |            .       .                |  Proverqva se otnoshenieto ((B_x - A_x)/ ( Z_x - A_x)) == ((B_y -A_y)/ (Z_y - A_y))
+        |    A       .       .                |
+        y1   * . . ...   .  ..                |
+        |                                     |
+        |____X1_____x2______X3________________|
         */
         for (i = 0; i < NUMBER_OF_INPUT_POINTS; i++)
         {
@@ -164,7 +164,7 @@ int main()
 
             printf("There are %d figures formed from the given points\n", NumberOfRecognizedFigures);
             do{
-PrintTUK:	    // Don't blame for using goto in a cycle. It is completely secure :)
+PrintTUK:	    // Don't blame me for using goto in a cycle. It is completely secure :)
                 fflush(stdin);
                 printf("If you want to visualize graphic and information for a specific figure, Enter its number ( 26 for Exit)\nFigure Number: ");
                 scanf_s("%d", &FigureNumber);
@@ -296,7 +296,7 @@ int IsParallelogram(int *arr_coord, int *figura_type, int *figura_coord, int *Nu
                     {
                         if ((arr_coord[2 * i] == arr_coord[2 * j]) && (m_x == p_x)) Parallelogram = 1;
         
-                        //Ako po-golqmoto Y e kym po-golqmoto X - vdigame flag maxY_side1. Povtarqme syshtoto i za vtorata strana i sravnqvame flagovete
+                        // If the bigger Y is related to the bigger X -? we raise a flag maxY_side1. Repeat the same for the second side and compare the flags.
                         MaxY_forCalcs = MAX(arr_coord[2 * i + 1], arr_coord[2 * j + 1]);
         
                         if (arr_coord[2 * i + 1] == arr_coord[2 * j + 1]) skipCheck = 1;
@@ -331,7 +331,7 @@ int IsParallelogram(int *arr_coord, int *figura_type, int *figura_coord, int *Nu
                                     tyrsenY = sqrt(pow((float)MAX(p_x, m_x) - MAX(arr_coord[2 * i], arr_coord[2 * j]), 2) + pow((float)MAX(p_y, m_y) - MAX(arr_coord[2 * i + 1], arr_coord[2 * j + 1]), 2));
                                     if (diagonal_ij == tyrsenY)
                                     {
-                                        //kvadrat
+                                        //square
                                         *figura_type = 1;
                                         figura_types[CountFigureTypes++] = 1;
                                     }
@@ -363,12 +363,12 @@ int IsParallelogram(int *arr_coord, int *figura_type, int *figura_coord, int *Nu
                                                 if ((arr_coord[2 * k]) == tyrsenX)
                                                         tyrsenY = arr_coord[2 * k + 1];
                                             }
-                                            // Do tuk imame X,Y na 2te tochka v ediniqt diagonal na usporednika.
-                                            // Trqbva da namerim drugite 2 tochki, da se izchisli razstoqnieto mejdu tqh i ako sa ravni, to usporednika e pravoygylnik
-        
+                                            
                                             diagonal_z = sqrt(pow((float)(MaxY_forCalcs - tyrsenY), 2) + pow((float)(X_forCalcs - tyrsenX), 2));
         
-                                            // syshtite izchisleniq i za 2riat diagonal
+                                            //Right now we have X,Y for two points of one of the diagonals of the figure.
+                                            // We have to find the other two points and to compare the diagonals. If they are equal -> the figure is rectangle
+
                                             X_forCalcs = MIN(arr_coord[2 * j], arr_coord[2 * i]);
                                             for (k = 0; k < NUMBER_OF_INPUT_POINTS; k++)
                                             {
@@ -386,9 +386,7 @@ int IsParallelogram(int *arr_coord, int *figura_type, int *figura_coord, int *Nu
                                                 if ((arr_coord[2 * k]) == tyrsenX)
                                                         tyrsenY = arr_coord[2 * k + 1];
                                             }
-                                            // Do tuk imame X,Y na 2te tochka v ediniqt diagonal na usporednika.
-                                            // Trqbva da namerim drugite 2 tochki, da se izchisli razstoqnieto mejdu tqh i ako sa ravni, to usporednika e pravoygylnik
-        
+                                            
                                             diagonal_ij = sqrt(pow((float)(MaxY_forCalcs - tyrsenY), 2) + pow((float)(X_forCalcs - tyrsenX), 2));
         
                                             if (diagonal_z == diagonal_ij)
@@ -462,7 +460,7 @@ void izchertavane(int *arr_coords, int *figura_coord, int FigureOrLine)
     if (min_y == 0) min_Y_forPRint = min_y;
     if (min_y < 0) min_Y_forPRint = min_y - 1;
 
-    /* Opredelqne na max broi simvoli neobhodimi za vizualizirane na stoinostite po grafikata */
+    /* Determine the Max number of symbols needed to visualize the values on the graph. */
     //NumberOfDigits_forX_min
     NumberForCalculations = min_x - 1;
     for (; abs(NumberForCalculations) > 0;)
