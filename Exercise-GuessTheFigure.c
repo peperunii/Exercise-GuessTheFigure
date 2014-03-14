@@ -20,198 +20,198 @@ int NUMBER_OF_INPUT_POINTS;
 
 int main()
 {
-        //1 2, 2 3, 4 7, 7 11, 0 -3, 0 -5, -5 4, -5 8, 4 6, 1 11, -9 6, -8 4, -1 -4, 12 9, 3 -2  -Lying on a same line
-        int i, j, k, z, t,check;
-        int figura_type = 0;
-        int shift_x = 0, shift_y = 0;
-        int LyingOnSameLine = 0, Parallelogram = 0;
-        float otnoshenie = 0, Ratio_abs = 0;
-        float Ratio_3rdCoord = 0;
-        int *coord;
-        int *input_coord;
-        int FigureNumber = 0;
-        int figura_coord[100];
-        int figura_types[25];
-        int fig_coord[4];
-        char unUsedString[255];
-        int FigureOrLine = 0;
-        int NumberOfRecognizedFigures = 0;
+    //1 2, 2 3, 4 7, 7 11, 0 -3, 0 -5, -5 4, -5 8, 4 6, 1 11, -9 6, -8 4, -1 -4, 12 9, 3 -2  -Lying on a same line
+    int i, j, k, z, t,check;
+    int figura_type = 0;
+    int shift_x = 0, shift_y = 0;
+    int LyingOnSameLine = 0, Parallelogram = 0;
+    float otnoshenie = 0, Ratio_abs = 0;
+    float Ratio_3rdCoord = 0;
+    int *coord;
+    int *input_coord;
+    int FigureNumber = 0;
+    int figura_coord[100];
+    int figura_types[25];
+    int fig_coord[4];
+    char unUsedString[255];
+    int FigureOrLine = 0;
+    int NumberOfRecognizedFigures = 0;
 
-        printf("Enter Number of points: ");
-        scanf("%d",&NUMBER_OF_INPUT_POINTS);
+    printf("Enter Number of points: ");
+    scanf("%d",&NUMBER_OF_INPUT_POINTS);
 
-        input_coord = (int *)malloc(NUMBER_OF_INPUT_POINTS * sizeof(int));
-        coord		= (int *)malloc(NUMBER_OF_INPUT_POINTS * sizeof(int));
-        for (i = 0; i < 4; i++) figura_coord[i] = -1;
-        for (i = 0; i < 5; i++) figura_types[i] = 0;
-        /* Check input data */
-        do{
-            t = 0;
-            check = 0;
-            system("cls");
-            fflush(stdin);
-            printf("Enter coordinates for %d points in the following format:\n", NUMBER_OF_INPUT_POINTS);
-            for (i = 0; i < NUMBER_OF_INPUT_POINTS; i++)
-            {
-                printf(" x y");
-                if (i != NUMBER_OF_INPUT_POINTS - 1) printf(",");
-            }
-            printf("\n");
-            for (i = 0; i < NUMBER_OF_INPUT_POINTS; i++)
-            {
-                check = scanf_s("%d", &input_coord[2 * i]);
-                if (check != 0) t++;
-                check = scanf_s("%d", &input_coord[2 * i + 1]);
-                if (check != 0) t++;
-                if (i != NUMBER_OF_INPUT_POINTS - 1) check = scanf_s("%s", unUsedString);
-            }
-                
-        } while (t != (2 * NUMBER_OF_INPUT_POINTS));
-
-        // Shifting the coordinate system to first quadrant
-        /*
-                        |                           |		
-                        |                           |		
-                        |                           | 		
-                      *	|   *                       |     *       *
-                ________|_________________  ---->   |                   
-                      *	|                           |     *	              
-                *       |                           | *		
-                        |                           |_______________________		                  
-        
-        
-        */
+    input_coord = (int *)malloc(NUMBER_OF_INPUT_POINTS * sizeof(int));
+    coord		= (int *)malloc(NUMBER_OF_INPUT_POINTS * sizeof(int));
+    for (i = 0; i < 4; i++) figura_coord[i] = -1;
+    for (i = 0; i < 5; i++) figura_types[i] = 0;
+    /* Check input data */
+    do{
+        t = 0;
+        check = 0;
+        system("cls");
+        fflush(stdin);
+        printf("Enter coordinates for %d points in the following format:\n", NUMBER_OF_INPUT_POINTS);
         for (i = 0; i < NUMBER_OF_INPUT_POINTS; i++)
         {
-            if (input_coord[2 * i] < 1)
-            {
-                //shift X
-                if ((shift_x + input_coord[2 * i]) < 1) shift_x = 1 - input_coord[2 * i];
-            }
-            if (input_coord[2 * i + 1] < 1)
-            {
-                //shift Y
-                if ((shift_y + input_coord[2 * i + 1]) < 1) shift_y = 1 - input_coord[2 * i + 1];
-            }
+            printf(" x y");
+            if (i != NUMBER_OF_INPUT_POINTS - 1) printf(",");
         }
+        printf("\n");
         for (i = 0; i < NUMBER_OF_INPUT_POINTS; i++)
         {
-            coord[2 * i] = input_coord[2 * i] + shift_x;
-            coord[2 * i + 1] = input_coord[2 * i + 1] + shift_y;
+            check = scanf_s("%d", &input_coord[2 * i]);
+            if (check != 0) t++;
+            check = scanf_s("%d", &input_coord[2 * i + 1]);
+            if (check != 0) t++;
+            if (i != NUMBER_OF_INPUT_POINTS - 1) check = scanf_s("%s", unUsedString);
         }
+            
+    } while (t != (2 * NUMBER_OF_INPUT_POINTS));
 
-        //Thales theorem
-        /*                   Z
-        y3                   +                |  A, B - zadadeni tochki obrazuvashti prava ( i, j)
-        |            B       .                |  +  Z tochka koqto shte byde proverena dali se namira na pravata AB
-        y2           *       .                |
-        |            .       .                |  Proverqva se otnoshenieto ((B_x - A_x)/ ( Z_x - A_x)) == ((B_y -A_y)/ (Z_y - A_y))
-        |    A       .       .                |
-        y1   * . . ...   .  ..                |
-        |                                     |
-        |____X1_____x2______X3________________|
-        */
-        for (i = 0; i < NUMBER_OF_INPUT_POINTS; i++)
+    // Shifting the coordinate system to first quadrant
+    /*
+                    |                           |		
+                    |                           |		
+                    |                           | 		
+                  *	|   *                       |     *       *
+            ________|_________________  ---->   |                   
+                  *	|                           |     *	              
+            *       |                           | *		
+                    |                           |_______________________		                  
+    
+    
+    */
+    for (i = 0; i < NUMBER_OF_INPUT_POINTS; i++)
+    {
+        if (input_coord[2 * i] < 1)
         {
-            for (j = 0; j < NUMBER_OF_INPUT_POINTS; j++)
+            //shift X
+            if ((shift_x + input_coord[2 * i]) < 1) shift_x = 1 - input_coord[2 * i];
+        }
+        if (input_coord[2 * i + 1] < 1)
+        {
+            //shift Y
+            if ((shift_y + input_coord[2 * i + 1]) < 1) shift_y = 1 - input_coord[2 * i + 1];
+        }
+    }
+    for (i = 0; i < NUMBER_OF_INPUT_POINTS; i++)
+    {
+        coord[2 * i] = input_coord[2 * i] + shift_x;
+        coord[2 * i + 1] = input_coord[2 * i + 1] + shift_y;
+    }
+
+    //Thales theorem
+    /*                   Z
+    y3                   +                |  A, B - zadadeni tochki obrazuvashti prava ( i, j)
+    |            B       .                |  +  Z tochka koqto shte byde proverena dali se namira na pravata AB
+    y2           *       .                |
+    |            .       .                |  Proverqva se otnoshenieto ((B_x - A_x)/ ( Z_x - A_x)) == ((B_y -A_y)/ (Z_y - A_y))
+    |    A       .       .                |
+    y1   * . . ...   .  ..                |
+    |                                     |
+    |____X1_____x2______X3________________|
+    */
+    for (i = 0; i < NUMBER_OF_INPUT_POINTS; i++)
+    {
+        for (j = 0; j < NUMBER_OF_INPUT_POINTS; j++)
+        {
+            if (j == i) continue;
+
+            if ((coord[2 * i + 1] - coord[2 * j + 1]) == 0) otnoshenie = 0;
+            else otnoshenie = (float)(coord[2 * i] - coord[2 * j]) / (coord[2 * i + 1] - coord[2 * j + 1]);
+            Ratio_abs = otnoshenie;
+
+            for (z = 0; z < NUMBER_OF_INPUT_POINTS; z++)
             {
-                if (j == i) continue;
+                if (z == i || z == j) continue;
 
-                if ((coord[2 * i + 1] - coord[2 * j + 1]) == 0) otnoshenie = 0;
-                else otnoshenie = (float)(coord[2 * i] - coord[2 * j]) / (coord[2 * i + 1] - coord[2 * j + 1]);
-                Ratio_abs = otnoshenie;
+                if ((coord[2 * i + 1] - coord[2 * z + 1]) == 0) Ratio_3rdCoord = 0;
+                else Ratio_3rdCoord = (float)(coord[2 * i] - coord[2 * z]) / (coord[2 * i + 1] - coord[2 * z + 1]);
 
-                for (z = 0; z < NUMBER_OF_INPUT_POINTS; z++)
+                if (((coord[2 * z] == coord[2 * i]) && (coord[2 * z] == coord[2 * j])) ||
+                        ((coord[2 * z + 1] == coord[2 * i + 1]) && (coord[2 * z + 1] == coord[2 * j + 1]))
+                        )
                 {
-                    if (z == i || z == j) continue;
-
-                    if ((coord[2 * i + 1] - coord[2 * z + 1]) == 0) Ratio_3rdCoord = 0;
-                    else Ratio_3rdCoord = (float)(coord[2 * i] - coord[2 * z]) / (coord[2 * i + 1] - coord[2 * z + 1]);
-
-                    if (((coord[2 * z] == coord[2 * i]) && (coord[2 * z] == coord[2 * j])) ||
-                            ((coord[2 * z + 1] == coord[2 * i + 1]) && (coord[2 * z + 1] == coord[2 * j + 1]))
-                            )
-                    {
-                        LyingOnSameLine = 1;
-                        break;
-                    }
-                    if (Ratio_3rdCoord == Ratio_abs && Ratio_3rdCoord != 0)
-                    {
-                        LyingOnSameLine = 1;
-                        break;
-                    }
+                    LyingOnSameLine = 1;
+                    break;
                 }
-                if (LyingOnSameLine) break;
+                if (Ratio_3rdCoord == Ratio_abs && Ratio_3rdCoord != 0)
+                {
+                    LyingOnSameLine = 1;
+                    break;
+                }
             }
             if (LyingOnSameLine) break;
         }
-        if (LyingOnSameLine)
-        {
-            printf("There are at least 3 points lying on a same line.\n");
-            printf("[%d, %d], [%d, %d], [%d,%d]\n", input_coord[2 * i], input_coord[2 * i + 1], input_coord[2 * j], input_coord[2 * j + 1], input_coord[2 * z], input_coord[2 * z + 1]);
-            
-            FigureOrLine = 1;
-            
-            figura_coord[0] = i;
-            figura_coord[1] = j;
-            figura_coord[2] = z;
-        }
-        else
-        {
-            printf("There aren't 3 point lying on a same line\n");
-            // check if there 4 points are forming recognizable shape.
-            Parallelogram = IsParallelogram(coord, &figura_type, figura_coord, &NumberOfRecognizedFigures, figura_types);
-
-            printf("There are %d figures formed from the given points\n", NumberOfRecognizedFigures);
-            do{
-PrintTUK:	    // Don't blame me for using goto in a cycle. It is completely secure :)
-                fflush(stdin);
-                printf("If you want to visualize graphic and information for a specific figure, Enter its number ( 26 for Exit)\nFigure Number: ");
-                scanf_s("%d", &FigureNumber);
-                if(( ((FigureNumber < 0) || (FigureNumber > NumberOfRecognizedFigures-1))) && (FigureNumber != 26)) goto PrintTUK;
-                figura_type = figura_types[FigureNumber];
-                if(FigureNumber == 26) goto EX_IT;
-                switch (figura_type)
-                {
-                    case 0: printf("The points does not form a recognizable shape (square, rect. or trapets..\n");
-                        break;
-                    case 1: printf("The figure is Square\n");
-                                         break;
-                    case 2: printf("The figure is Rectangle \n");
-                                         break;
-                    case 3: printf("The figure is Trapezoid\n");
-                                         break;
-                    case 4: printf("The figure is Parallelogram \n");
-                        break;
-                }
-                if (figura_type != 0)
-                {
-                    fig_coord[0] = figura_coord[4 * FigureNumber + 0];
-                    fig_coord[1] = figura_coord[4 * FigureNumber + 1];
-                    fig_coord[2] = figura_coord[4 * FigureNumber + 2];
-                    fig_coord[3] = figura_coord[4 * FigureNumber + 3];
-
-                    printf("The points forming the figure are: [%d, %d], [%d, %d], [%d, %d], [%d, %d]\n",
-                            input_coord[2 * fig_coord[0]], input_coord[2 * fig_coord[0] + 1],
-                            input_coord[2 * fig_coord[1]], input_coord[2 * fig_coord[1] + 1],
-                            input_coord[2 * fig_coord[2]], input_coord[2 * fig_coord[2] + 1],
-                            input_coord[2 * fig_coord[3]], input_coord[2 * fig_coord[3] + 1]
-                            );
-                    FigureOrLine = 2;
-
-                    izchertavane(input_coord, fig_coord, FigureOrLine);
-                }
-                if (FigureNumber == 26) break;
-            } while (1);
-        }
-        //Original array as parameter
-        if (LyingOnSameLine || (FigureOrLine == 0)) izchertavane(input_coord, figura_coord, FigureOrLine);
-EX_IT:
-		free(input_coord);
-		free(coord);
-		_getch();
+        if (LyingOnSameLine) break;
+    }
+    if (LyingOnSameLine)
+    {
+        printf("There are at least 3 points lying on a same line.\n");
+        printf("[%d, %d], [%d, %d], [%d,%d]\n", input_coord[2 * i], input_coord[2 * i + 1], input_coord[2 * j], input_coord[2 * j + 1], input_coord[2 * z], input_coord[2 * z + 1]);
         
-		return 0;
+        FigureOrLine = 1;
+        
+        figura_coord[0] = i;
+        figura_coord[1] = j;
+        figura_coord[2] = z;
+    }
+    else
+    {
+        printf("There aren't 3 point lying on a same line\n");
+        // check if there 4 points are forming recognizable shape.
+        Parallelogram = IsParallelogram(coord, &figura_type, figura_coord, &NumberOfRecognizedFigures, figura_types);
+
+        printf("There are %d figures formed from the given points\n", NumberOfRecognizedFigures);
+        do{
+PrintTUK:	    // Don't blame me for using goto in a cycle. It is completely secure :)
+            fflush(stdin);
+            printf("If you want to visualize graphic and information for a specific figure, Enter its number ( 26 for Exit)\nFigure Number: ");
+            scanf_s("%d", &FigureNumber);
+            if(( ((FigureNumber < 0) || (FigureNumber > NumberOfRecognizedFigures-1))) && (FigureNumber != 26)) goto PrintTUK;
+            figura_type = figura_types[FigureNumber];
+            if(FigureNumber == 26) goto EX_IT;
+            switch (figura_type)
+            {
+                case 0: printf("The points does not form a recognizable shape (square, rect. or trapets..\n");
+                    break;
+                case 1: printf("The figure is Square\n");
+                                     break;
+                case 2: printf("The figure is Rectangle \n");
+                                     break;
+                case 3: printf("The figure is Trapezoid\n");
+                                     break;
+                case 4: printf("The figure is Parallelogram \n");
+                    break;
+            }
+            if (figura_type != 0)
+            {
+                fig_coord[0] = figura_coord[4 * FigureNumber + 0];
+                fig_coord[1] = figura_coord[4 * FigureNumber + 1];
+                fig_coord[2] = figura_coord[4 * FigureNumber + 2];
+                fig_coord[3] = figura_coord[4 * FigureNumber + 3];
+
+                printf("The points forming the figure are: [%d, %d], [%d, %d], [%d, %d], [%d, %d]\n",
+                        input_coord[2 * fig_coord[0]], input_coord[2 * fig_coord[0] + 1],
+                        input_coord[2 * fig_coord[1]], input_coord[2 * fig_coord[1] + 1],
+                        input_coord[2 * fig_coord[2]], input_coord[2 * fig_coord[2] + 1],
+                        input_coord[2 * fig_coord[3]], input_coord[2 * fig_coord[3] + 1]
+                        );
+                FigureOrLine = 2;
+
+                izchertavane(input_coord, fig_coord, FigureOrLine);
+            }
+            if (FigureNumber == 26) break;
+        } while (1);
+    }
+    //Original array as parameter
+    if (LyingOnSameLine || (FigureOrLine == 0)) izchertavane(input_coord, figura_coord, FigureOrLine);
+EX_IT:
+    free(input_coord);
+    free(coord);
+    _getch();
+          
+    return 0;
 }
 
 int IsParallelogram(int *arr_coord, int *figura_type, int *figura_coord, int *NumberOfRecognizedFigures, int *figura_types)
