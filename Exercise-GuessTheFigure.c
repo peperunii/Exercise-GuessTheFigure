@@ -207,8 +207,11 @@ PrintTUK:	    // Don't blame me for using goto in a cycle. It is completely secu
         //Original array as parameter
         if (LyingOnSameLine || (FigureOrLine == 0)) izchertavane(input_coord, figura_coord, FigureOrLine);
 EX_IT:
-        _getch();
-        return 0;
+		free(input_coord);
+		free(coord);
+		_getch();
+        
+		return 0;
 }
 
 int IsParallelogram(int *arr_coord, int *figura_type, int *figura_coord, int *NumberOfRecognizedFigures, int *figura_types)
